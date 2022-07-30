@@ -1,4 +1,5 @@
-const Options = {
+const Options = ({ language, theme }) => ({
+	defaultValue: '',
 	editorProps: {
 		$blockScrolling: true,
 	},
@@ -8,6 +9,15 @@ const Options = {
 	highlightActiveLine: true,
 	name: 'editor',
 	placeholder: '',
+	setOptions: {
+		enableBasicAutocompletion: true,
+		enableLiveAutocompletion: true,
+		enableSnippets: true,
+		mode: language.value,
+		showLineNumbers: true,
+		tabSize: 3,
+		theme: theme.value,
+	},
 	showGutter: true,
 	showPrintMargin: true,
 	style: {
@@ -16,19 +26,5 @@ const Options = {
 	},
 	tabSize: 3,
 	wrapEnabled: true,
-	setOptions: {
-		enableBasicAutocompletion: true,
-		enableLiveAutocompletion: true,
-		enableSnippets: true,
-		showLineNumbers: true,
-		tabSize: 3,
-	},
-};
+});
 export default Options;
-// setOptions={{
-// 	mode: language.value,
-// 	theme: theme.value,
-// }}
-// editorProps={{
-// 	$blockScrolling: true,
-// }}

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import CodeEditor from './CodeEditor';
 const StyledElement = styled.div`
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	display: flex;
 	height: 100vh;
+	justify-content: center;
 	& .code-editor-container {
 		width: 800px;
 	}

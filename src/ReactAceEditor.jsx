@@ -204,7 +204,7 @@ const selectOptions = {
 		}),
 	},
 };
-const CodeEditor = ({
+const ReactAceEditor = ({
 	isDisabled,
 	language,
 	languages,
@@ -254,48 +254,48 @@ const CodeEditor = ({
 	});
 	const [fontSizes] = useState([
 		{
-			label: '22px',
-			value: 22,
-		},
-		{
-			label: '21px',
-			value: 21,
-		},
-		{
-			label: '20px',
-			value: 20,
-		},
-		{
-			label: '19px',
-			value: 19,
-		},
-		{
-			label: '18px',
-			value: 18,
-		},
-		{
-			label: '17px',
-			value: 17,
-		},
-		{
-			label: '16px',
-			value: 16,
-		},
-		{
-			label: '15px',
-			value: 15,
-		},
-		{
-			label: '14px',
-			value: 14,
+			label: '12px',
+			value: 12,
 		},
 		{
 			label: '13px',
 			value: 13,
 		},
 		{
-			label: '12px',
-			value: 12,
+			label: '14px',
+			value: 14,
+		},
+		{
+			label: '15px',
+			value: 15,
+		},
+		{
+			label: '16px',
+			value: 16,
+		},
+		{
+			label: '17px',
+			value: 17,
+		},
+		{
+			label: '18px',
+			value: 18,
+		},
+		{
+			label: '19px',
+			value: 19,
+		},
+		{
+			label: '20px',
+			value: 20,
+		},
+		{
+			label: '21px',
+			value: 21,
+		},
+		{
+			label: '22px',
+			value: 22,
 		},
 	]);
 	const [fontSize, setFontSize] = useState({
@@ -355,8 +355,8 @@ const CodeEditor = ({
 	}, []);
 	return (
 		<StyledElement>
-			<div className="editor-header">
-				<div className="editor-theme">
+			<div className='editor-header'>
+				<div className='editor-theme'>
 					<ReactSelect
 						{...selectOptions}
 						onChange={onChangeTheme}
@@ -364,7 +364,7 @@ const CodeEditor = ({
 						value={theme}
 					/>
 				</div>
-				<div className="editor-font-size">
+				<div className='editor-font-size'>
 					<ReactSelect
 						{...selectOptions}
 						onChange={onChangeFontSize}
@@ -372,7 +372,7 @@ const CodeEditor = ({
 						value={fontSize}
 					/>
 				</div>
-				<div className="editor-language">
+				<div className='editor-language'>
 					<ReactSelect
 						{...selectOptions}
 						onChange={onChangeLanguage}
@@ -380,7 +380,7 @@ const CodeEditor = ({
 						value={language}
 					/>
 				</div>
-				<div className="editor-run">
+				<div className='editor-run'>
 					<button onClick={onSubmit}>Run code</button>
 				</div>
 			</div>
@@ -397,17 +397,17 @@ const CodeEditor = ({
 		</StyledElement>
 	);
 };
-CodeEditor.defaultProps = {
+ReactAceEditor.defaultProps = {
 	isDisabled: false,
 	language: {
-		id: 5,
+		id: 3,
 		label: 'Javascript',
 		value: 'javascript',
 	},
 	languages: [],
 	value: '',
 };
-CodeEditor.propTypes = {
+ReactAceEditor.propTypes = {
 	isDisabled: bool,
 	language: { label: string, value: string },
 	languages: array,
@@ -417,4 +417,4 @@ CodeEditor.propTypes = {
 	setLanguage: func.isRequired,
 	value: string,
 };
-export default CodeEditor;
+export default ReactAceEditor;

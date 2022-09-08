@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CodeEditor from './CodeEditor';
+import ReactAceEditor from './ReactAceEditor';
+import ReactMonacoEditor from './ReactMonacoEditor';
 const StyledElement = styled.div`
 	align-items: center;
 	display: flex;
@@ -35,17 +36,24 @@ const App = () => {
 		value: 'html',
 	});
 	return (
-		<StyledElement>
-			<div className="code-editor-container">
-				<CodeEditor
-					language={language}
-					languages={languages}
-					onChange={setValue}
-					setLanguage={setLanguage}
-					value={value}
-				/>
-			</div>
-		</StyledElement>
+		<>
+			<StyledElement>
+				<div className='code-editor-container'>
+					<ReactAceEditor
+						language={language}
+						languages={languages}
+						onChange={setValue}
+						setLanguage={setLanguage}
+						value={value}
+					/>
+				</div>
+			</StyledElement>
+			<StyledElement>
+				<div className='code-editor-container' style={{ height: 600 }}>
+					<ReactMonacoEditor />
+				</div>
+			</StyledElement>
+		</>
 	);
 };
 export default App;

@@ -45,6 +45,7 @@ const App = () => {
 						onChange={setValue}
 						setLanguage={setLanguage}
 						value={value}
+						onSubmit={() => console.log(value)}
 					/>
 				</div>
 			</StyledElement>

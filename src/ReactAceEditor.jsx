@@ -24,14 +24,15 @@ import 'ace-builds/src-noconflict/theme-textmate';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/theme-twilight';
 import 'ace-builds/src-noconflict/theme-xcode';
-import { array, bool, func, string } from 'prop-types';
+import { array, bool, func, number, shape, string } from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactAce from 'react-ace';
 import ReactSelect from 'react-select/creatable';
 import styled from 'styled-components';
 const StyledElement = styled.div`
 	border-radius: 12px;
-	border: 1px solid #e2e4ea;
+	box-shadow: 0 1px 10px 0 rgba(13, 46, 105, 0.1),
+		0 1px 10px 0 rgba(13, 46, 105, 0.1);
 	overflow: hidden;
 	& .editor-header {
 		display: flex;
@@ -123,7 +124,7 @@ const selectOptions = {
 			whiteSpace: 'nowrap',
 			width: '100%',
 			':hover': {
-				background: isDisabled ? '#808080' : '#0000ff',
+				backgroundColor: isDisabled ? '#808080' : '#0000ff',
 				color: isDisabled ? '#000000' : '#ffffff',
 			},
 		}),
@@ -134,8 +135,8 @@ const selectOptions = {
 		}),
 		control: styles => ({
 			...styles,
-			backgroundColor: '#f7f8fc',
-			border: '1px solid #e2e4ea !important',
+			backgroundColor: '#f5f5f5',
+			border: 'none',
 			borderRadius: 6,
 			boxShadow: 'none',
 			color: 'black',
@@ -145,12 +146,12 @@ const selectOptions = {
 			padding: 0,
 			width: '100%',
 			':hover': {
-				border: '1px solid #e2e4ea !important',
+				border: 'none',
 			},
 		}),
 		menu: styles => ({
 			...styles,
-			backgroundColor: '#f7f8fc',
+			backgroundColor: '#f5f5f5',
 			border: 'none',
 			borderRadius: 6,
 			boxShadow:
@@ -167,10 +168,10 @@ const selectOptions = {
 				width: 7,
 			},
 			'::-webkit-scrollbar-track': {
-				background: 'transparent',
+				backgroundColor: 'transparent',
 			},
 			'::-webkit-scrollbar-thumb': {
-				background: '#0000ff',
+				backgroundColor: '#0000ff',
 				borderRadius: 4,
 			},
 		}),
@@ -249,8 +250,8 @@ const ReactAceEditor = ({
 		},
 	]);
 	const [theme, setTheme] = useState({
-		label: 'Textmate',
-		value: 'textmate',
+		label: 'Monokai',
+		value: 'monokai',
 	});
 	const [fontSizes] = useState([
 		{
@@ -299,8 +300,8 @@ const ReactAceEditor = ({
 		},
 	]);
 	const [fontSize, setFontSize] = useState({
-		label: '14px',
-		value: 14,
+		label: '15px',
+		value: 15,
 	});
 	const onChangeTheme = value => {
 		const defaultTheme = JSON.parse(localStorage.getItem('editor-theme'));
@@ -309,8 +310,8 @@ const ReactAceEditor = ({
 			: defaultTheme
 			? defaultTheme
 			: {
-					label: 'Textmate',
-					value: 'textmate',
+					label: 'Monokai',
+					value: 'monokai',
 			  };
 		setTheme(theme);
 		localStorage.setItem('editor-theme', JSON.stringify(theme));
@@ -325,8 +326,8 @@ const ReactAceEditor = ({
 			: defaultFontSize
 			? defaultFontSize
 			: {
-					label: '14px',
-					value: 14,
+					label: '15px',
+					value: 15,
 			  };
 		setFontSize(fontSize);
 		localStorage.setItem('editor-font-size', JSON.stringify(fontSize));
@@ -338,9 +339,9 @@ const ReactAceEditor = ({
 			: defaultTheme
 			? defaultTheme
 			: {
-					id: 5,
-					label: 'Javascript',
-					value: 'javascript',
+					id: 1,
+					label: 'Html',
+					value: 'html',
 			  };
 		setLanguage(language);
 		AceBuilds.edit('editor')
@@ -384,6 +385,7 @@ const ReactAceEditor = ({
 					<button onClick={onSubmit}>Run code</button>
 				</div>
 			</div>
+			{console.log(language)}
 			<ReactAce
 				{...options({ theme, language })}
 				fontSize={fontSize?.value}
@@ -400,20 +402,20 @@ const ReactAceEditor = ({
 ReactAceEditor.defaultProps = {
 	isDisabled: false,
 	language: {
-		id: 3,
-		label: 'Javascript',
-		value: 'javascript',
+		id: 1,
+		label: 'Html',
+		value: 'html',
 	},
 	languages: [],
 	value: '',
 };
 ReactAceEditor.propTypes = {
 	isDisabled: bool,
-	language: { label: string, value: string },
+	language: shape({ label: string, value: string, id: number }),
 	languages: array,
 	onChange: func.isRequired,
-	onFocus: func.isRequired,
-	onSubmit: func.isRequired,
+	onFocus: func,
+	onSubmit: func,
 	setLanguage: func.isRequired,
 	value: string,
 };

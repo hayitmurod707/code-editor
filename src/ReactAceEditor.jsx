@@ -1,34 +1,34 @@
-import AceBuilds from 'ace-builds';
-import 'ace-builds/src-noconflict/mode-csharp';
-import 'ace-builds/src-noconflict/mode-css';
-import 'ace-builds/src-noconflict/mode-c_cpp';
-import 'ace-builds/src-noconflict/mode-dart';
-import 'ace-builds/src-noconflict/mode-golang';
-import 'ace-builds/src-noconflict/mode-haskell';
-import 'ace-builds/src-noconflict/mode-html';
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/mode-pascal';
-import 'ace-builds/src-noconflict/mode-php';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/mode-ruby';
-import 'ace-builds/src-noconflict/mode-rust';
-import 'ace-builds/src-noconflict/mode-typescript';
-import 'ace-builds/src-noconflict/theme-github';
-import 'ace-builds/src-noconflict/theme-kuroir';
-import 'ace-builds/src-noconflict/theme-monokai';
-import 'ace-builds/src-noconflict/theme-solarized_dark';
-import 'ace-builds/src-noconflict/theme-solarized_light';
-import 'ace-builds/src-noconflict/theme-terminal';
-import 'ace-builds/src-noconflict/theme-textmate';
-import 'ace-builds/src-noconflict/theme-tomorrow';
-import 'ace-builds/src-noconflict/theme-twilight';
-import 'ace-builds/src-noconflict/theme-xcode';
-import { array, bool, func, number, shape, string } from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import ReactAce from 'react-ace';
-import ReactSelect from 'react-select/creatable';
-import styled from 'styled-components';
+import AceBuilds from "ace-builds";
+import "ace-builds/src-noconflict/mode-csharp";
+import "ace-builds/src-noconflict/mode-css";
+import "ace-builds/src-noconflict/mode-c_cpp";
+import "ace-builds/src-noconflict/mode-dart";
+import "ace-builds/src-noconflict/mode-golang";
+import "ace-builds/src-noconflict/mode-haskell";
+import "ace-builds/src-noconflict/mode-html";
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/mode-pascal";
+import "ace-builds/src-noconflict/mode-php";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-ruby";
+import "ace-builds/src-noconflict/mode-rust";
+import "ace-builds/src-noconflict/mode-typescript";
+import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-kuroir";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-solarized_dark";
+import "ace-builds/src-noconflict/theme-solarized_light";
+import "ace-builds/src-noconflict/theme-terminal";
+import "ace-builds/src-noconflict/theme-textmate";
+import "ace-builds/src-noconflict/theme-tomorrow";
+import "ace-builds/src-noconflict/theme-twilight";
+import "ace-builds/src-noconflict/theme-xcode";
+import { array, bool, func, number, shape, string } from "prop-types";
+import { useEffect, useState } from "react";
+import ReactAce from "react-ace";
+import ReactSelect, { components } from "react-select";
+import styled, { keyframes } from "styled-components";
 const StyledElement = styled.div`
 	border-radius: 12px;
 	box-shadow: 0 1px 10px 0 rgba(13, 46, 105, 0.1),
@@ -71,8 +71,8 @@ const StyledElement = styled.div`
 		}
 	}
 `;
-const options = ({ language, theme }) => ({
-	defaultValue: '',
+const getOptions = ({ language, theme }) => ({
+	defaultValue: "",
 	editorProps: {
 		$blockScrolling: true,
 	},
@@ -80,8 +80,8 @@ const options = ({ language, theme }) => ({
 	enableLiveAutocompletion: true,
 	enableSnippets: true,
 	highlightActiveLine: true,
-	name: 'editor',
-	placeholder: '',
+	name: "editor",
+	placeholder: "",
 	setOptions: {
 		enableBasicAutocompletion: true,
 		enableLiveAutocompletion: true,
@@ -94,117 +94,147 @@ const options = ({ language, theme }) => ({
 	showGutter: true,
 	showPrintMargin: true,
 	style: {
-		height: '400px',
-		width: '100%',
+		height: "400px",
+		width: "100%",
 	},
 	tabSize: 3,
 	wrapEnabled: true,
 });
+const IndicatorSeparator = () => null;
 const selectOptions = {
 	isClearable: false,
 	isMulti: false,
 	isSearchable: false,
 	maxMenuHeight: 240,
-	menuPlacement: 'auto',
+	menuPlacement: "auto",
 	styles: {
 		option: (styles, { isSelected, isDisabled }) => ({
 			...styles,
 			backgroundColor: isDisabled
-				? '#808080'
+				? "#808080"
 				: isSelected
-				? '#0000ff'
-				: '#f7f8fc',
-			color: isDisabled ? '#000000' : isSelected ? '#ffffff' : '#000000',
-			cursor: isDisabled ? 'not-allowed' : 'pointer',
+				? "#0000ff"
+				: "#f7f8fc",
+			color: isDisabled ? "#000000" : isSelected ? "#ffffff" : "#000000",
+			cursor: isDisabled ? "not-allowed" : "pointer",
 			fontSize: 15,
 			height: 42,
-			overflow: 'hidden',
-			padding: '12px 16px',
-			textOverflow: 'ellipsis',
-			whiteSpace: 'nowrap',
-			width: '100%',
-			':hover': {
-				backgroundColor: isDisabled ? '#808080' : '#0000ff',
-				color: isDisabled ? '#000000' : '#ffffff',
+			overflow: "hidden",
+			padding: "12px 16px",
+			textOverflow: "ellipsis",
+			whiteSpace: "nowrap",
+			width: "100%",
+			":hover": {
+				backgroundColor: isDisabled ? "#808080" : "#0000ff",
+				color: isDisabled ? "#000000" : "#ffffff",
 			},
 		}),
 		singleValue: styles => ({
 			...styles,
-			color: '#000000',
+			color: "#000000",
 			margin: 0,
 		}),
 		control: styles => ({
 			...styles,
-			backgroundColor: '#f5f5f5',
-			border: 'none',
+			backgroundColor: "#f5f5f5",
+			border: "none",
 			borderRadius: 6,
-			boxShadow: 'none',
-			color: 'black',
-			cursor: 'pointer',
+			boxShadow: "none",
+			color: "black",
+			cursor: "pointer",
 			height: 42,
-			outline: 'none',
+			outline: "none",
 			padding: 0,
-			width: '100%',
-			':hover': {
-				border: 'none',
+			width: "100%",
+			":hover": {
+				border: "none",
 			},
 		}),
 		menu: styles => ({
 			...styles,
-			backgroundColor: '#f5f5f5',
-			border: 'none',
+			backgroundColor: "#f5f5f5",
+			border: "none",
 			borderRadius: 6,
 			boxShadow:
-				'0 1px 10px 0 rgba(13, 46, 105, 0.1), 0 1px 10px 0 rgba(13, 46, 105, 0.1)',
+				"0 1px 10px 0 rgba(13, 46, 105, 0.1), 0 1px 10px 0 rgba(13, 46, 105, 0.1)",
 			margin: 0,
-			overflow: 'hidden',
+			overflow: "hidden",
 			padding: 0,
 			zIndex: 10,
 		}),
 		menuList: styles => ({
 			...styles,
 			padding: 0,
-			'::-webkit-scrollbar': {
+			"::-webkit-scrollbar": {
 				width: 7,
 			},
-			'::-webkit-scrollbar-track': {
-				backgroundColor: 'transparent',
+			"::-webkit-scrollbar-track": {
+				backgroundColor: "transparent",
 			},
-			'::-webkit-scrollbar-thumb': {
-				backgroundColor: '#0000ff',
+			"::-webkit-scrollbar-thumb": {
+				backgroundColor: "#0000ff",
 				borderRadius: 4,
 			},
 		}),
 		indicatorSeparator: styles => ({
 			...styles,
-			display: 'none',
+			display: "none",
 		}),
 		dropdownIndicator: (styles, { selectProps: { menuIsOpen } }) => ({
 			...styles,
-			alignItems: 'center',
-			color: '#000000',
-			display: 'flex',
-			height: '100%',
-			margin: '0 10px 0 0',
+			alignItems: "center",
+			color: "#000000",
+			display: "flex",
+			height: "100%",
+			margin: "0 10px 0 0",
 			padding: 0,
-			transform: `rotate(${menuIsOpen ? '180deg' : '0'})`,
-			transformOrigin: 'center',
-			transition: '0.4s',
+			transform: `rotate(${menuIsOpen ? "180deg" : "0"})`,
+			transformOrigin: "center",
+			transition: "0.4s",
 			width: 15,
-			':hover': {
-				color: '#000000',
+			":hover": {
+				color: "#000000",
 			},
 		}),
-		indicatorsContainer: styles => ({ ...styles, overflow: 'hidden' }),
+		indicatorsContainer: styles => ({ ...styles, overflow: "hidden" }),
 		valueContainer: styles => ({
 			...styles,
-			display: 'flex',
+			display: "flex",
 			fontSize: 15,
-			height: '100%',
+			height: "100%",
 			padding: 12,
 		}),
 	},
 };
+const animation = keyframes`
+	0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+const StyledMenu = styled.div`
+	& .react-select-menu {
+		animation: ${animation} 0.3s ease-in-out;
+		background-color: #ffffff;
+		border-radius: 8px;
+		border: none;
+		box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+	}
+`;
+const Menu = props => (
+	<StyledMenu>
+		<components.Menu {...props} className="react-select-menu">
+			{props?.children}
+		</components.Menu>
+	</StyledMenu>
+);
 const ReactAceEditor = ({
 	isDisabled,
 	language,
@@ -217,177 +247,221 @@ const ReactAceEditor = ({
 }) => {
 	const [themes] = useState([
 		{
-			label: 'Kuroir',
-			value: 'kuroir',
+			label: "Kuroir",
+			value: "kuroir",
 		},
 		{
-			label: 'Monokai',
-			value: 'monokai',
+			label: "Monokai",
+			value: "monokai",
 		},
 		{
-			label: 'Solarized Dark',
-			value: 'solarized_dark',
+			label: "Solarized Dark",
+			value: "solarized_dark",
 		},
 		{
-			label: 'Solarized Light',
-			value: 'solarized_light',
+			label: "Solarized Light",
+			value: "solarized_light",
 		},
 		{
-			label: 'Terminal',
-			value: 'terminal',
+			label: "Terminal",
+			value: "terminal",
 		},
 		{
-			label: 'Textmate',
-			value: 'textmate',
+			label: "Textmate",
+			value: "textmate",
 		},
 		{
-			label: 'Twilight',
-			value: 'twilight',
+			label: "Twilight",
+			value: "twilight",
 		},
 		{
-			label: 'Xcode',
-			value: 'xcode',
+			label: "Xcode",
+			value: "xcode",
 		},
 	]);
 	const [theme, setTheme] = useState({
-		label: 'Monokai',
-		value: 'monokai',
+		label: "Monokai",
+		value: "monokai",
 	});
 	const [fontSizes] = useState([
 		{
-			label: '12px',
+			label: "12px",
 			value: 12,
 		},
 		{
-			label: '13px',
+			label: "13px",
 			value: 13,
 		},
 		{
-			label: '14px',
+			label: "14px",
 			value: 14,
 		},
 		{
-			label: '15px',
+			label: "15px",
 			value: 15,
 		},
 		{
-			label: '16px',
+			label: "16px",
 			value: 16,
 		},
 		{
-			label: '17px',
+			label: "17px",
 			value: 17,
 		},
 		{
-			label: '18px',
+			label: "18px",
 			value: 18,
 		},
 		{
-			label: '19px',
+			label: "19px",
 			value: 19,
 		},
 		{
-			label: '20px',
+			label: "20px",
 			value: 20,
 		},
 		{
-			label: '21px',
+			label: "21px",
 			value: 21,
 		},
 		{
-			label: '22px',
+			label: "22px",
 			value: 22,
 		},
 	]);
 	const [fontSize, setFontSize] = useState({
-		label: '15px',
+		label: "15px",
 		value: 15,
 	});
 	const onChangeTheme = value => {
-		const defaultTheme = JSON.parse(localStorage.getItem('editor-theme'));
+		const defaultTheme = JSON.parse(localStorage.getItem("editor-theme"));
 		const theme = value
 			? value
 			: defaultTheme
 			? defaultTheme
 			: {
-					label: 'Monokai',
-					value: 'monokai',
+					label: "Monokai",
+					value: "monokai",
 			  };
 		setTheme(theme);
-		localStorage.setItem('editor-theme', JSON.stringify(theme));
-		AceBuilds.edit('editor').setTheme(`ace/theme/${theme.value}`);
+		localStorage.setItem("editor-theme", JSON.stringify(theme));
+		AceBuilds.edit("editor").setTheme(`ace/theme/${theme.value}`);
 	};
 	const onChangeFontSize = value => {
 		const defaultFontSize = JSON.parse(
-			localStorage.getItem('editor-font-size')
+			localStorage.getItem("editor-font-size")
 		);
 		const fontSize = value
 			? value
 			: defaultFontSize
 			? defaultFontSize
 			: {
-					label: '15px',
+					label: "15px",
 					value: 15,
 			  };
 		setFontSize(fontSize);
-		localStorage.setItem('editor-font-size', JSON.stringify(fontSize));
+		localStorage.setItem("editor-font-size", JSON.stringify(fontSize));
 	};
 	const onChangeLanguage = value => {
-		const defaultTheme = JSON.parse(localStorage.getItem('editor-language'));
+		const defaultTheme = JSON.parse(localStorage.getItem("editor-language"));
 		const language = value
 			? value
 			: defaultTheme
 			? defaultTheme
 			: {
 					id: 1,
-					label: 'Html',
-					value: 'html',
+					label: "Html",
+					value: "html",
 			  };
 		setLanguage(language);
-		AceBuilds.edit('editor')
+		AceBuilds.edit("editor")
 			.getSession()
 			.setMode(`ace/mode/${language.value}`);
-		localStorage.setItem('editor-language', JSON.stringify(language));
+		localStorage.setItem("editor-language", JSON.stringify(language));
 	};
 	useEffect(() => {
+		const onChangeTheme = () => {
+			const defaultTheme = JSON.parse(localStorage.getItem("editor-theme"));
+			const theme = defaultTheme
+				? defaultTheme
+				: {
+						label: "Monokai",
+						value: "monokai",
+				  };
+			setTheme(theme);
+			localStorage.setItem("editor-theme", JSON.stringify(theme));
+			AceBuilds.edit("editor").setTheme(`ace/theme/${theme.value}`);
+		};
+		const onChangeFontSize = () => {
+			const defaultFontSize = JSON.parse(
+				localStorage.getItem("editor-font-size")
+			);
+			const fontSize = defaultFontSize
+				? defaultFontSize
+				: {
+						label: "15px",
+						value: 15,
+				  };
+			setFontSize(fontSize);
+			localStorage.setItem("editor-font-size", JSON.stringify(fontSize));
+		};
+		const onChangeLanguage = () => {
+			const defaultTheme = JSON.parse(
+				localStorage.getItem("editor-language")
+			);
+			const language = defaultTheme
+				? defaultTheme
+				: {
+						id: 1,
+						label: "Html",
+						value: "html",
+				  };
+			setLanguage(language);
+			AceBuilds.edit("editor")
+				.getSession()
+				.setMode(`ace/mode/${language.value}`);
+			localStorage.setItem("editor-language", JSON.stringify(language));
+		};
 		onChangeFontSize();
 		onChangeLanguage();
 		onChangeTheme();
-	}, []);
+	}, [setLanguage]);
 	return (
 		<StyledElement>
-			<div className='editor-header'>
-				<div className='editor-theme'>
+			<div className="editor-header">
+				<div className="editor-theme">
 					<ReactSelect
 						{...selectOptions}
+						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeTheme}
 						options={themes}
 						value={theme}
 					/>
 				</div>
-				<div className='editor-font-size'>
+				<div className="editor-font-size">
 					<ReactSelect
 						{...selectOptions}
+						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeFontSize}
 						options={fontSizes}
 						value={fontSize}
 					/>
 				</div>
-				<div className='editor-language'>
+				<div className="editor-language">
 					<ReactSelect
 						{...selectOptions}
+						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeLanguage}
 						options={languages}
 						value={language}
 					/>
 				</div>
-				<div className='editor-run'>
+				<div className="editor-run">
 					<button onClick={onSubmit}>Run code</button>
 				</div>
 			</div>
-			{console.log(language)}
 			<ReactAce
-				{...options({ theme, language })}
+				{...getOptions({ theme, language })}
 				fontSize={fontSize?.value}
 				mode={language.value}
 				onChange={onChange}
@@ -403,11 +477,11 @@ ReactAceEditor.defaultProps = {
 	isDisabled: false,
 	language: {
 		id: 1,
-		label: 'Html',
-		value: 'html',
+		label: "Html",
+		value: "html",
 	},
 	languages: [],
-	value: '',
+	value: "",
 };
 ReactAceEditor.propTypes = {
 	isDisabled: bool,

@@ -55,10 +55,10 @@ const StyledElement = styled.div`
 		& .editor-run {
 			margin: 0 6px 0 0;
 			& button {
-				background-color: #0000ff;
+				background-color: rgb(0, 0, 255);
 				border-radius: 6px;
 				border: none;
-				color: #ffffff;
+				color: rgb(255, 255, 255);
 				cursor: pointer;
 				font-size: 15px;
 				height: 42px;
@@ -86,10 +86,10 @@ const getOptions = ({ language, theme }) => ({
 		enableBasicAutocompletion: true,
 		enableLiveAutocompletion: true,
 		enableSnippets: true,
-		mode: language.value,
+		mode: language?.value,
 		showLineNumbers: true,
 		tabSize: 3,
-		theme: theme.value,
+		theme: theme?.value,
 	},
 	showGutter: true,
 	showPrintMargin: true,
@@ -101,7 +101,38 @@ const getOptions = ({ language, theme }) => ({
 	wrapEnabled: true,
 });
 const IndicatorSeparator = () => null;
+const animation = keyframes`
+	0% {
+    opacity: 0.1;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+const StyledMenu = styled.div`
+	& .react-select-menu {
+		animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		background-color: rgb(255, 255, 255);
+		border-radius: 8px;
+		border: none;
+		box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+		margin: 0;
+		overflow: hidden;
+		padding: 0;
+		transform-origin: top;
+	}
+`;
+const Menu = props => (
+	<StyledMenu>
+		<components.Menu {...props} className="react-select-menu">
+			{props?.children}
+		</components.Menu>
+	</StyledMenu>
+);
 const selectOptions = {
+	components: { IndicatorSeparator, Menu },
 	isClearable: false,
 	isMulti: false,
 	isSearchable: false,
@@ -111,11 +142,15 @@ const selectOptions = {
 		option: (styles, { isSelected, isDisabled }) => ({
 			...styles,
 			backgroundColor: isDisabled
-				? "#808080"
+				? "rgb(105, 111, 133)"
 				: isSelected
-				? "#0000ff"
-				: "#f7f8fc",
-			color: isDisabled ? "#000000" : isSelected ? "#ffffff" : "#000000",
+				? "rgb(0, 0, 255)"
+				: "rgb(247, 248, 252)",
+			color: isDisabled
+				? "rgb(37, 42, 59)"
+				: isSelected
+				? "rgb(255, 255, 255)"
+				: "rgb(37, 42, 59)",
 			cursor: isDisabled ? "not-allowed" : "pointer",
 			fontSize: 15,
 			height: 42,
@@ -125,13 +160,15 @@ const selectOptions = {
 			whiteSpace: "nowrap",
 			width: "100%",
 			":hover": {
-				backgroundColor: isDisabled ? "#808080" : "#0000ff",
-				color: isDisabled ? "#000000" : "#ffffff",
+				backgroundColor: isDisabled
+					? "rgb(105, 111, 133)"
+					: "rgb(0, 0, 255)",
+				color: isDisabled ? "rgb(37, 42, 59)" : "rgb(255, 255, 255)",
 			},
 		}),
 		singleValue: styles => ({
 			...styles,
-			color: "#000000",
+			color: "rgb(37, 42, 59)",
 			margin: 0,
 		}),
 		control: styles => ({
@@ -152,7 +189,7 @@ const selectOptions = {
 		}),
 		menu: styles => ({
 			...styles,
-			backgroundColor: "#f5f5f5",
+			backgroundColor: "rgb(245, 245, 245)",
 			border: "none",
 			borderRadius: 6,
 			boxShadow:
@@ -172,7 +209,7 @@ const selectOptions = {
 				backgroundColor: "transparent",
 			},
 			"::-webkit-scrollbar-thumb": {
-				backgroundColor: "#0000ff",
+				backgroundColor: "rgb(0, 0, 255)",
 				borderRadius: 4,
 			},
 		}),
@@ -183,7 +220,7 @@ const selectOptions = {
 		dropdownIndicator: (styles, { selectProps: { menuIsOpen } }) => ({
 			...styles,
 			alignItems: "center",
-			color: "#000000",
+			color: "rgb(37, 42, 59)",
 			display: "flex",
 			height: "100%",
 			margin: "0 10px 0 0",
@@ -193,7 +230,7 @@ const selectOptions = {
 			transition: "0.4s",
 			width: 15,
 			":hover": {
-				color: "#000000",
+				color: "rgb(37, 42, 59)",
 			},
 		}),
 		indicatorsContainer: styles => ({ ...styles, overflow: "hidden" }),
@@ -206,35 +243,6 @@ const selectOptions = {
 		}),
 	},
 };
-const animation = keyframes`
-	0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-const StyledMenu = styled.div`
-	& .react-select-menu {
-		animation: ${animation} 0.3s ease-in-out;
-		background-color: #ffffff;
-		border-radius: 8px;
-		border: none;
-		box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
-		margin: 0;
-		overflow: hidden;
-		padding: 0;
-	}
-`;
-const Menu = props => (
-	<StyledMenu>
-		<components.Menu {...props} className="react-select-menu">
-			{props?.children}
-		</components.Menu>
-	</StyledMenu>
-);
 const ReactAceEditor = ({
 	isDisabled,
 	language,
@@ -432,7 +440,6 @@ const ReactAceEditor = ({
 				<div className="editor-theme">
 					<ReactSelect
 						{...selectOptions}
-						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeTheme}
 						options={themes}
 						value={theme}
@@ -441,7 +448,6 @@ const ReactAceEditor = ({
 				<div className="editor-font-size">
 					<ReactSelect
 						{...selectOptions}
-						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeFontSize}
 						options={fontSizes}
 						value={fontSize}
@@ -450,7 +456,6 @@ const ReactAceEditor = ({
 				<div className="editor-language">
 					<ReactSelect
 						{...selectOptions}
-						components={{ IndicatorSeparator, Menu }}
 						onChange={onChangeLanguage}
 						options={languages}
 						value={language}

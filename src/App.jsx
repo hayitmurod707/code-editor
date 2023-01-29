@@ -37,6 +37,9 @@ const App = () => {
 	});
 	return (
 		<>
+			<h4 style={{ textAlign: "center" }}>
+				<a href="https://github.com/hayitmurod707/code-editor">Github</a>
+			</h4>
 			<StyledElement>
 				<div className="code-editor-container">
 					<h2>React Ace Editor</h2>
@@ -51,8 +54,8 @@ const App = () => {
 				</div>
 			</StyledElement>
 			<StyledElement>
-				<h2>React Monaco Editor</h2>
 				<div className="code-editor-container" style={{ height: 600 }}>
+					<h2>React Monaco Editor</h2>
 					<ReactMonacoEditor />
 				</div>
 			</StyledElement>

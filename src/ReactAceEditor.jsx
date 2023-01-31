@@ -164,7 +164,11 @@ const selectOptions = {
 			whiteSpace: "nowrap",
 			width: "100%",
 			":hover": {
-				backgroundColor: isDisabled ? "rgb(105, 111, 133)" : "skyblue",
+				backgroundColor: isDisabled
+					? "rgb(247, 248, 252)"
+					: isSelected
+					? "rgb(0, 0, 255)"
+					: "skyblue",
 			},
 		}),
 		singleValue: styles => ({

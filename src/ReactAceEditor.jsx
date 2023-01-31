@@ -139,17 +139,21 @@ const selectOptions = {
 	maxMenuHeight: 240,
 	menuPlacement: "auto",
 	styles: {
-		option: (styles, { isSelected, isDisabled }) => ({
+		option: (styles, { isSelected, isDisabled, isFocused }) => ({
 			...styles,
 			backgroundColor: isDisabled
-				? "rgb(105, 111, 133)"
+				? "rgb(247, 248, 252)"
 				: isSelected
 				? "rgb(0, 0, 255)"
-				: "rgb(247, 248, 252)",
+				: isFocused
+				? "skyblue"
+				: "rgb(255, 255, 255)",
 			color: isDisabled
-				? "rgb(37, 42, 59)"
+				? "rgb(105, 111, 133)"
 				: isSelected
 				? "rgb(255, 255, 255)"
+				: isFocused
+				? "rgb(37, 42, 59)"
 				: "rgb(37, 42, 59)",
 			cursor: isDisabled ? "not-allowed" : "pointer",
 			fontSize: 15,
@@ -163,7 +167,6 @@ const selectOptions = {
 				backgroundColor: isDisabled
 					? "rgb(105, 111, 133)"
 					: "rgb(0, 0, 255)",
-				color: isDisabled ? "rgb(37, 42, 59)" : "rgb(255, 255, 255)",
 			},
 		}),
 		singleValue: styles => ({
@@ -255,12 +258,12 @@ const ReactAceEditor = ({
 }) => {
 	const [themes] = useState([
 		{
-			label: "Kuroir",
-			value: "kuroir",
-		},
-		{
 			label: "Monokai",
 			value: "monokai",
+		},
+		{
+			label: "Kuroir",
+			value: "kuroir",
 		},
 		{
 			label: "Solarized Dark",

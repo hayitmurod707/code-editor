@@ -48,9 +48,9 @@ const App = () => {
                   language={language}
                   languages={languages}
                   onChange={setValue}
+                  onSubmit={() => console.log(value)}
                   setLanguage={setLanguage}
                   value={value}
-                  onSubmit={() => console.log(value)}
                />
             </div>
          </StyledElement>

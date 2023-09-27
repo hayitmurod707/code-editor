@@ -30,58 +30,48 @@ import ReactAce from 'react-ace';
 import ReactSelect, { components } from 'react-select';
 import styled, { keyframes } from 'styled-components';
 const StyledElement = styled.div`
-   border-radius: 12px;
-   box-shadow: 0 1px 10px 0 rgba(13, 46, 105, 0.1),
-      0 1px 10px 0 rgba(13, 46, 105, 0.1);
+   border-radius: 16px;
+   box-shadow: 0 1px 20px 0 rgba(13, 46, 105, 0.07),
+      0 1px 20px 0 rgba(13, 46, 105, 0.07);
    overflow: hidden;
    & .editor-header {
       display: flex;
       flex-wrap: wrap;
-      padding: 6px 0 6px 6px;
-      & .editor-theme {
-         width: 154px;
-      }
-      & .editor-font-size {
-         margin: 0 6px;
-         width: 87px;
-      }
-      & .editor-language {
-         margin: 0 6px 0 0;
-         width: 125px;
-         @media (max-width: 391px) {
-            margin: 6px 6px 0 0;
-         }
+      padding: 0 6px 6px 6px;
+      & .editor-menu {
+         margin: 6px 6px 0 0;
       }
       & .editor-run {
-         margin: 0 6px 0 0;
+         margin: 6px 0 0 0;
          & button {
-            background-color: #5254f1;
-            border-radius: 6px;
+            background-color: #0163f7;
+            border-radius: 12px;
             border: none;
             color: rgb(255, 255, 255);
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             height: 42px;
             outline: none;
             padding: 0 16px;
-            @media (max-width: 495px) {
-               margin: 6px 6px 0 0;
-            }
          }
       }
    }
 `;
 const getOptions = ({ language, theme }) => ({
    defaultValue: '',
-   editorProps: {
-      $blockScrolling: true,
-   },
    enableBasicAutocompletion: true,
    enableLiveAutocompletion: true,
    enableSnippets: true,
    highlightActiveLine: true,
    name: 'editor',
    placeholder: '',
+   showGutter: true,
+   showPrintMargin: true,
+   tabSize: 3,
+   wrapEnabled: true,
+   editorProps: {
+      $blockScrolling: true,
+   },
    setOptions: {
       enableBasicAutocompletion: true,
       enableLiveAutocompletion: true,
@@ -91,14 +81,10 @@ const getOptions = ({ language, theme }) => ({
       tabSize: 3,
       theme: theme?.value,
    },
-   showGutter: true,
-   showPrintMargin: true,
    style: {
       height: '400px',
       width: '100%',
    },
-   tabSize: 3,
-   wrapEnabled: true,
 });
 const IndicatorSeparator = () => null;
 const animation = keyframes`
@@ -115,13 +101,15 @@ const StyledMenu = styled.div`
    & .react-select-menu {
       animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       background-color: rgb(255, 255, 255);
-      border-radius: 8px;
+      border-radius: 12px;
       border: none;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+      box-shadow: none;
       margin: 0;
+      min-width: 100%;
       overflow: hidden;
       padding: 0;
       transform-origin: top;
+      width: initial;
    }
 `;
 const Menu = props => (
@@ -137,17 +125,18 @@ const selectOptions = {
    isMulti: false,
    isSearchable: false,
    maxMenuHeight: 250,
+   menuPortalTarget: document.body,
    styles: {
       option: (styles, { isSelected, isDisabled, isFocused }) => ({
          ...styles,
          backgroundColor: isDisabled
             ? 'rgb(247, 248, 252)'
             : isSelected
-            ? '#5254f1'
+            ? '#0163f7'
             : isFocused
             ? 'rgba(82, 85, 241, 0.1)'
             : 'rgb(255, 255, 255)',
-         borderRadius: 6,
+         borderRadius: 10,
          color: isDisabled
             ? 'rgb(105, 111, 133)'
             : isSelected
@@ -159,7 +148,7 @@ const selectOptions = {
          fontSize: 15,
          height: 40,
          overflow: 'hidden',
-         padding: '12px 16px',
+         padding: '12px',
          textOverflow: 'ellipsis',
          whiteSpace: 'nowrap',
          width: '100%',
@@ -167,7 +156,7 @@ const selectOptions = {
             backgroundColor: isDisabled
                ? 'rgb(247, 248, 252)'
                : isSelected
-               ? '#5254f1'
+               ? '#0163f7'
                : 'rgba(82, 85, 241, 0.1)',
          },
       }),
@@ -180,7 +169,7 @@ const selectOptions = {
          ...styles,
          backgroundColor: '#f5f5f5',
          border: 'none',
-         borderRadius: 8,
+         borderRadius: 12,
          boxShadow: 'none',
          color: 'black',
          cursor: 'pointer',
@@ -192,13 +181,12 @@ const selectOptions = {
             border: 'none',
          },
       }),
+      menuPortal: styles => ({ ...styles, zIndex: 9999 }),
       menu: styles => ({
          ...styles,
          backgroundColor: 'rgb(245, 245, 245)',
          border: 'none',
-         borderRadius: 8,
-         boxShadow:
-            '0 1px 10px 0 rgba(13, 46, 105, 0.1), 0 1px 10px 0 rgba(13, 46, 105, 0.1)',
+         borderRadius: 12,
          margin: 0,
          overflow: 'hidden',
          padding: 0,
@@ -208,14 +196,14 @@ const selectOptions = {
          ...styles,
          padding: 5,
          '::-webkit-scrollbar': {
-            width: 7,
+            width: 6,
          },
          '::-webkit-scrollbar-track': {
             backgroundColor: 'transparent',
          },
          '::-webkit-scrollbar-thumb': {
-            backgroundColor: '#5254f1',
-            borderRadius: 4,
+            backgroundColor: '#0163f7',
+            borderRadius: 3,
          },
       }),
       indicatorSeparator: styles => ({
@@ -442,32 +430,35 @@ const ReactAceEditor = ({
    return (
       <StyledElement>
          <div className='editor-header'>
-            <div className='editor-theme'>
+            <div className='editor-menu'>
                <ReactSelect
                   {...selectOptions}
+                  isDisabled={isDisabled}
                   onChange={onChangeTheme}
                   options={themes}
                   value={theme}
                />
             </div>
-            <div className='editor-font-size'>
+            <div className='editor-menu'>
                <ReactSelect
                   {...selectOptions}
+                  isDisabled={isDisabled}
                   onChange={onChangeFontSize}
                   options={fontSizes}
                   value={fontSize}
                />
             </div>
-            <div className='editor-language'>
+            <div className='editor-menu'>
                <ReactSelect
                   {...selectOptions}
+                  isDisabled={isDisabled}
                   onChange={onChangeLanguage}
                   options={languages}
                   value={language}
                />
             </div>
             <div className='editor-run'>
-               <button onClick={onSubmit}>Run code</button>
+               <button onClick={onSubmit}>Run</button>
             </div>
          </div>
          <ReactAce
@@ -485,13 +476,13 @@ const ReactAceEditor = ({
 };
 ReactAceEditor.defaultProps = {
    isDisabled: false,
+   languages: [],
+   value: '',
    language: {
       id: 1,
       label: 'Html',
       value: 'html',
    },
-   languages: [],
-   value: '',
 };
 ReactAceEditor.propTypes = {
    isDisabled: bool,

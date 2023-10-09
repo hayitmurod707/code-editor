@@ -33,10 +33,13 @@ const StyledElement = styled.div`
    border-radius: 16px;
    box-shadow: 0 1px 20px 0 rgba(13, 46, 105, 0.07),
       0 1px 20px 0 rgba(13, 46, 105, 0.07);
+   height: 100%;
    overflow: hidden;
+   width: 100%;
    & .editor-header {
       display: flex;
       flex-wrap: wrap;
+      height: 48px;
       padding: 0 6px 6px 6px;
       & .editor-menu {
          margin: 6px 6px 0 0;
@@ -55,6 +58,9 @@ const StyledElement = styled.div`
             padding: 0 16px;
          }
       }
+   }
+   & .editor-body {
+      height: calc(100% - 54px);
    }
 `;
 const getOptions = ({ language, theme }) => ({
@@ -461,16 +467,19 @@ const ReactAceEditor = ({
                <button onClick={onSubmit}>Run</button>
             </div>
          </div>
-         <ReactAce
-            {...getOptions({ theme, language })}
-            fontSize={fontSize?.value}
-            mode={language.value}
-            onChange={onChange}
-            onFocus={onFocus}
-            readOnly={isDisabled}
-            theme={theme.value}
-            value={value}
-         />
+         <div className='editor-body'>
+            <ReactAce
+               {...getOptions({ theme, language })}
+               fontSize={fontSize?.value}
+               mode={language.value}
+               onChange={onChange}
+               onFocus={onFocus}
+               readOnly={isDisabled}
+               theme={theme.value}
+               value={value}
+               style={{ height: '100%', width: '100%' }}
+            />
+         </div>
       </StyledElement>
    );
 };

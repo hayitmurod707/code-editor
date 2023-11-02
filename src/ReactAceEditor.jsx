@@ -107,9 +107,10 @@ const StyledMenu = styled.div`
    & .react-select-menu {
       animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       background-color: rgb(255, 255, 255);
+      box-shadow: 0 1px 20px 0 rgba(13, 46, 105, 0.07),
+         0 1px 20px 0 rgba(13, 46, 105, 0.07);
       border-radius: 12px;
       border: none;
-      box-shadow: none;
       margin: 0;
       min-width: 100%;
       overflow: hidden;
